@@ -387,4 +387,36 @@ document.addEventListener('DOMContentLoaded', () => {
         startTimerBtn.disabled = false;
         pauseTimerBtn.disabled = true;
     }
+
+    // --- Live Node Diagnostics & Equalizer Animation ---
+    const diagLatencyEl = document.getElementById('diagLatency');
+    const diagMemoryEl = document.getElementById('diagMemory');
+    const eqBars = document.querySelectorAll('.eq-bar');
+
+    function startDiagnosticsEngine() {
+        if (eqBars.length === 0) return;
+
+        // Equalizer real-time dancing bars
+        setInterval(() => {
+            eqBars.forEach((bar) => {
+                const randomHeight = Math.floor(Math.random() * 65) + 30; // 30% - 95%
+                bar.style.setProperty('--bar-h', `${randomHeight}%`);
+            });
+        }, 320);
+
+        // Subtle telemetry jitter for latency & memory
+        setInterval(() => {
+            if (diagLatencyEl) {
+                const jitterLatency = Math.floor(Math.random() * 5) + 12; // 12 - 16 ms
+                diagLatencyEl.textContent = `${jitterLatency} ms`;
+            }
+            if (diagMemoryEl) {
+                const jitterMem = (94 + Math.random() * 1.5).toFixed(1); // 94.0 - 95.5%
+                diagMemoryEl.textContent = `${jitterMem}% OK`;
+            }
+        }, 2500);
+    }
+
+    startDiagnosticsEngine();
 });
+
