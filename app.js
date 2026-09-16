@@ -1,5 +1,6 @@
 /**
  * Personal Dashboard & Live Timing Engine
+ * Chengxuan Wu - AIoT Portal
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -18,15 +19,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const greetingIconEl = document.getElementById('greetingIcon');
     const greetingTextEl = document.getElementById('greetingText');
     
-    // Profile Name Elements
+    // Profile Elements
     const userNameDisplayEl = document.getElementById('userNameDisplay');
     const editNameBtn = document.getElementById('editNameBtn');
     const nameContainerEl = document.getElementById('nameContainer');
-    const nameEditFormEl = document.getElementById('nameEditForm');
+    const profileEditFormEl = document.getElementById('profileEditForm');
     const nameInputEl = document.getElementById('nameInput');
-    const saveNameBtn = document.getElementById('saveNameBtn');
-    const cancelNameBtn = document.getElementById('cancelNameBtn');
+    const deptInputEl = document.getElementById('deptInput');
+    const bioInputEl = document.getElementById('bioInput');
+    const saveProfileBtn = document.getElementById('saveProfileBtn');
+    const cancelProfileBtn = document.getElementById('cancelProfileBtn');
     const avatarInitialsEl = document.getElementById('avatarInitials');
+    const deptDisplayEl = document.getElementById('deptDisplay');
+    const userBioDisplayEl = document.getElementById('userBioDisplay');
     
     // World Clocks
     const utcTimeEl = document.getElementById('utcTime');
@@ -54,6 +59,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- State Variables ---
     let use24HourFormat = localStorage.getItem('pref_time_format') === '24';
     let userName = localStorage.getItem('user_name') || 'Chengxuan Wu';
+    let userDept = localStorage.getItem('user_dept') || 'National Chung Hsing University (NCHU) • Computer Science & AIoT';
+    let userBio = localStorage.getItem('user_bio') || 'Passionate about Artificial Intelligence of Things (AIoT), embedded system architecture, edge machine learning, and interactive real-time telemetry dashboards.';
     let isDarkMode = localStorage.getItem('pref_theme') !== 'light';
     
     // Timer State
@@ -63,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Initial Setup ---
     initTheme();
-    initName();
+    initProfile();
     updateFormatButtons();
     startClockEngine();
 
@@ -84,14 +91,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     themeToggleBtn.addEventListener('click', toggleTheme);
 
-    // Editable Name handlers
-    userNameDisplayEl.addEventListener('click', showNameEditForm);
-    editNameBtn.addEventListener('click', showNameEditForm);
-    saveNameBtn.addEventListener('click', saveName);
-    cancelNameBtn.addEventListener('click', hideNameEditForm);
+    // Profile Edit Handlers
+    userNameDisplayEl.addEventListener('click', showProfileEditForm);
+    editNameBtn.addEventListener('click', showProfileEditForm);
+    saveProfileBtn.addEventListener('click', saveProfile);
+    cancelProfileBtn.addEventListener('click', hideProfileEditForm);
+
     nameInputEl.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') saveName();
-        if (e.key === 'Escape') hideNameEditForm();
+        if (e.key === 'Enter') saveProfile();
+        if (e.key === 'Escape') hideProfileEditForm();
     });
 
     // Timer Controls
@@ -109,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateClock() {
         const now = new Date();
 
-        // 1. Time Formatting
+        // 1. Time Formatting (HH:MM:SS)
         let hours = now.getHours();
         const minutes = String(now.getMinutes()).padStart(2, '0');
         const seconds = String(now.getSeconds()).padStart(2, '0');
@@ -150,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 4. Dynamic Greeting based on current hour
         updateGreeting(now.getHours());
 
-        // 5. Day Progress
+        // 5. Day Progress (0.0% to 100.0%)
         const secondsPassedInDay = (now.getHours() * 3600) + (now.getMinutes() * 60) + now.getSeconds();
         const totalSecondsInDay = 86400;
         const progressPercent = ((secondsPassedInDay / totalSecondsInDay) * 100).toFixed(1);
@@ -183,7 +191,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         greetingIconEl.textContent = icon;
-        greetingTextEl.textContent = `${greeting}, ${userName.split(' ')[0]}!`;
+        const firstName = userName.split(' ')[0] || 'Chengxuan';
+        greetingTextEl.textContent = `${greeting}, ${firstName}!`;
     }
 
     function updateFormatButtons() {
@@ -196,15 +205,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Name Management
-    function initName() {
+    // Profile Management
+    function initProfile() {
         userNameDisplayEl.textContent = userName;
+        if (deptDisplayEl) {
+            deptDisplayEl.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg> ${userDept}`;
+        }
+        if (userBioDisplayEl) {
+            userBioDisplayEl.textContent = userBio;
+        }
         updateAvatarInitials(userName);
     }
 
     function updateAvatarInitials(name) {
         const parts = name.trim().split(' ');
-        let initials = 'YN';
+        let initials = 'CW';
         if (parts.length >= 2) {
             initials = (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
         } else if (parts[0] && parts[0].length > 0) {
@@ -213,28 +228,46 @@ document.addEventListener('DOMContentLoaded', () => {
         avatarInitialsEl.textContent = initials;
     }
 
-    function showNameEditForm() {
+    function showProfileEditForm() {
         nameInputEl.value = userName;
+        deptInputEl.value = userDept;
+        bioInputEl.value = userBio;
         nameContainerEl.classList.add('hidden');
-        nameEditFormEl.classList.remove('hidden');
+        profileEditFormEl.classList.remove('hidden');
         nameInputEl.focus();
     }
 
-    function hideNameEditForm() {
-        nameEditFormEl.classList.add('hidden');
+    function hideProfileEditForm() {
+        profileEditFormEl.classList.add('hidden');
         nameContainerEl.classList.remove('hidden');
     }
 
-    function saveName() {
+    function saveProfile() {
         const newName = nameInputEl.value.trim();
+        const newDept = deptInputEl.value.trim();
+        const newBio = bioInputEl.value.trim();
+
         if (newName) {
             userName = newName;
             localStorage.setItem('user_name', userName);
             userNameDisplayEl.textContent = userName;
             updateAvatarInitials(userName);
-            updateClock();
         }
-        hideNameEditForm();
+
+        if (newDept) {
+            userDept = newDept;
+            localStorage.setItem('user_dept', userDept);
+            deptDisplayEl.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg> ${userDept}`;
+        }
+
+        if (newBio) {
+            userBio = newBio;
+            localStorage.setItem('user_bio', userBio);
+            userBioDisplayEl.textContent = userBio;
+        }
+
+        updateClock();
+        hideProfileEditForm();
     }
 
     // Theme Management

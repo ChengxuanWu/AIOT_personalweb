@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Dashboard & Live Timing</title>
-    <meta name="description" content="Personalized interactive dashboard displaying current time, date, personalized greeting, and time management tools.">
+    <title>Chengxuan Wu | AIoT Personal Portal & Live Dashboard</title>
+    <meta name="description" content="Personal portfolio and AIoT edge dashboard of Chengxuan Wu, featuring real-time timing, technical skills, and projects.">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,13 +22,33 @@
 
     <!-- Main Container -->
     <main class="dashboard-container">
-        <!-- Header / Profile Section -->
-        <header class="profile-header glass-card">
+        <!-- Top Navigation Bar -->
+        <nav class="nav-bar glass-card">
+            <div class="nav-brand">
+                <span class="brand-badge">AIoT</span>
+                <span class="brand-text">Chengxuan's Portal</span>
+            </div>
+            <div class="nav-links">
+                <a href="#profileSection" class="nav-link">👤 Profile</a>
+                <a href="#clockSection" class="nav-link">🕐 Live Clock</a>
+                <a href="#skillsSection" class="nav-link">🛠 Skills</a>
+                <a href="#projectsSection" class="nav-link">🚀 Projects</a>
+            </div>
+            <div class="nav-actions">
+                <button id="themeToggleBtn" class="glass-btn" title="Toggle Theme" aria-label="Toggle Theme">
+                    <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                    <svg class="moon-icon hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                </button>
+            </div>
+        </nav>
+
+        <!-- 👤 1. Profile Section -->
+        <header id="profileSection" class="profile-header glass-card">
             <div class="avatar-wrapper">
                 <div class="avatar" id="avatarBadge">
                     <span id="avatarInitials">CW</span>
                 </div>
-                <div class="status-indicator" title="Status: Online & Live"></div>
+                <div class="status-indicator" title="Status: Online & Active"></div>
             </div>
             
             <div class="profile-info">
@@ -38,31 +58,50 @@
                 </div>
                 
                 <h1 class="user-name" id="nameContainer">
-                    <span id="userNameDisplay" class="editable-name" title="Click to edit your name">Chengxuan Wu</span>
-                    <button id="editNameBtn" class="icon-btn edit-btn" aria-label="Edit Name" title="Edit Name">
+                    <span id="userNameDisplay" class="editable-name" title="Click to edit name">Chengxuan Wu</span>
+                    <button id="editNameBtn" class="icon-btn edit-btn" aria-label="Edit Profile" title="Edit Profile">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                     </button>
                 </h1>
                 
-                <div id="nameEditForm" class="name-edit-form hidden">
-                    <input type="text" id="nameInput" placeholder="Enter your name..." maxlength="35" autocomplete="off" />
-                    <button id="saveNameBtn" class="btn btn-primary">Save</button>
-                    <button id="cancelNameBtn" class="btn btn-secondary">Cancel</button>
+                <!-- Quick Edit Form -->
+                <div id="profileEditForm" class="profile-edit-form hidden">
+                    <div class="edit-inputs">
+                        <input type="text" id="nameInput" placeholder="Your name..." maxlength="35" autocomplete="off" />
+                        <input type="text" id="deptInput" placeholder="Department / Major..." maxlength="60" autocomplete="off" />
+                        <textarea id="bioInput" placeholder="Short Bio / Introduction..." rows="2" maxlength="180"></textarea>
+                    </div>
+                    <div class="edit-buttons">
+                        <button id="saveProfileBtn" class="btn btn-primary">Save Profile</button>
+                        <button id="cancelProfileBtn" class="btn btn-secondary">Cancel</button>
+                    </div>
                 </div>
 
-                <p class="user-bio" id="userBioDisplay" title="Click to edit status message">Personal Dashboard & Time Engine</p>
-            </div>
+                <!-- Academic Department & Specialty -->
+                <div class="profile-badges" id="deptBadgeContainer">
+                    <span class="dept-badge" id="deptDisplay">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+                        National Chung Hsing University (NCHU) &bull; Computer Science & AIoT
+                    </span>
+                    <span class="specialty-badge">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                        Embedded Systems & Edge Computing
+                    </span>
+                </div>
 
-            <div class="header-actions">
-                <button id="themeToggleBtn" class="glass-btn" title="Switch Theme">
-                    <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-                    <svg class="moon-icon hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-                </button>
+                <p class="user-bio" id="userBioDisplay" title="Click edit to modify bio">
+                    Passionate about Artificial Intelligence of Things (AIoT), embedded system architecture, edge machine learning, and interactive real-time telemetry dashboards.
+                </p>
             </div>
         </header>
 
-        <!-- Main Hero Time Display -->
-        <section class="time-hero glass-card">
+        <!-- 🕐 4. Live Clock Centerpiece -->
+        <section id="clockSection" class="time-hero glass-card">
+            <div class="section-title-tag">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                <span>Live Edge Timing Engine</span>
+            </div>
+
             <div class="time-format-switch">
                 <button id="format12Btn" class="format-btn active">12H</button>
                 <button id="format24Btn" class="format-btn">24H</button>
@@ -94,9 +133,9 @@
             </div>
         </section>
 
-        <!-- Dashboard Grid Cards -->
+        <!-- Dashboard Grid Cards (Timing details & World clocks) -->
         <section class="grid-cards">
-            <!-- UTC & World Clocks -->
+            <!-- World Clocks -->
             <div class="card glass-card">
                 <div class="card-header">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
@@ -122,7 +161,7 @@
                 </div>
             </div>
 
-            <!-- Time Metrics & Details -->
+            <!-- Timing Details -->
             <div class="card glass-card">
                 <div class="card-header">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
@@ -148,7 +187,7 @@
                 </div>
             </div>
 
-            <!-- Focus Timer / Stopwatch Widget -->
+            <!-- Quick Timer Widget -->
             <div class="card glass-card">
                 <div class="card-header">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>
@@ -165,9 +204,185 @@
             </div>
         </section>
 
+        <!-- 🛠 2. Skills Section -->
+        <section id="skillsSection" class="section-container">
+            <div class="section-header">
+                <div class="section-tag">
+                    <span class="tag-icon">🛠</span>
+                    <span>Technical Capabilities</span>
+                </div>
+                <h2 class="section-heading">Skills & Proficiencies</h2>
+                <p class="section-subtext">Specialized tools and engineering technologies across AI, IoT, and Software.</p>
+            </div>
+
+            <div class="skills-grid">
+                <!-- Programming Languages -->
+                <div class="skill-category glass-card">
+                    <div class="skill-cat-header">
+                        <div class="cat-icon-wrap icon-purple">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                        </div>
+                        <h3>Programming Languages</h3>
+                    </div>
+                    <div class="skill-badges">
+                        <span class="skill-pill">🐍 Python</span>
+                        <span class="skill-pill">⚡ C / C++</span>
+                        <span class="skill-pill">🌐 JavaScript (ES6+)</span>
+                        <span class="skill-pill">📜 SQL</span>
+                    </div>
+                </div>
+
+                <!-- AI & Machine Learning -->
+                <div class="skill-category glass-card">
+                    <div class="skill-cat-header">
+                        <div class="cat-icon-wrap icon-cyan">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a8 8 0 0 0-8 8c0 3.37 2.1 6.25 5.09 7.42L9 22l3-1.5L15 22l-.09-4.58C17.9 16.25 20 13.37 20 10a8 8 0 0 0-8-8z"></path></svg>
+                        </div>
+                        <h3>AI & Machine Learning</h3>
+                    </div>
+                    <div class="skill-badges">
+                        <span class="skill-pill">🤖 Machine Learning</span>
+                        <span class="skill-pill">🧠 Deep Learning</span>
+                        <span class="skill-pill">📊 Data Analysis</span>
+                        <span class="skill-pill">👁️ Computer Vision</span>
+                    </div>
+                </div>
+
+                <!-- IoT & Embedded Systems -->
+                <div class="skill-category glass-card">
+                    <div class="skill-cat-header">
+                        <div class="cat-icon-wrap icon-emerald">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+                        </div>
+                        <h3>IoT & Embedded Systems</h3>
+                    </div>
+                    <div class="skill-badges">
+                        <span class="skill-pill">📡 IoT Sensors & Actuators</span>
+                        <span class="skill-pill">🔌 ESP32 / Arduino</span>
+                        <span class="skill-pill">📶 MQTT & WebSockets</span>
+                        <span class="skill-pill">🐧 Linux & Edge Computing</span>
+                    </div>
+                </div>
+
+                <!-- Web Development & Tools -->
+                <div class="skill-category glass-card">
+                    <div class="skill-cat-header">
+                        <div class="cat-icon-wrap icon-amber">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M2 12h20"></path><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                        </div>
+                        <h3>Web & DevOps</h3>
+                    </div>
+                    <div class="skill-badges">
+                        <span class="skill-pill">🎨 HTML5 & Vanilla CSS</span>
+                        <span class="skill-pill">✨ Glassmorphism UI/UX</span>
+                        <span class="skill-pill">🐙 Git & GitHub Pages</span>
+                        <span class="skill-pill">⚡ RESTful APIs</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 🚀 3. Projects Section -->
+        <section id="projectsSection" class="section-container">
+            <div class="section-header">
+                <div class="section-tag">
+                    <span class="tag-icon">🚀</span>
+                    <span>Engineering Portfolio</span>
+                </div>
+                <h2 class="section-heading">Featured Projects</h2>
+                <p class="section-subtext">Hands-on applications and semester research projects in AIoT.</p>
+            </div>
+
+            <div class="projects-grid">
+                <!-- Project 1: AIoT Personal Portal & Live Dashboard -->
+                <article class="project-card glass-card">
+                    <div class="project-badge status-live">● Live & Deployed</div>
+                    <div class="project-content">
+                        <h3 class="project-title">AIoT Personal Web & Live Timing Dashboard</h3>
+                        <p class="project-desc">
+                            A lightweight, zero-overhead edge dashboard engineered for IoT kiosk terminals. Features real-time high-precision clock intervals, timezone resolution, dynamic temporal greetings, and offline-first state persistence.
+                        </p>
+                        <div class="project-tech-stack">
+                            <span class="tech-tag">Vanilla JS</span>
+                            <span class="tech-tag">CSS3 Glassmorphism</span>
+                            <span class="tech-tag">HTML5</span>
+                            <span class="tech-tag">GitHub Pages</span>
+                            <span class="tech-tag">Git CI/CD</span>
+                        </div>
+                    </div>
+                    <div class="project-footer">
+                        <a href="https://github.com/ChengxuanWu/AIOT_personalweb" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                            GitHub Repo
+                        </a>
+                        <a href="https://chengxuanwu.github.io/AIOT_personalweb/" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                            Live Demo
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Project 2: Smart IoT Environmental Telemetry & Edge AI -->
+                <article class="project-card glass-card">
+                    <div class="project-badge status-upcoming">⚡ Semester Project</div>
+                    <div class="project-content">
+                        <h3 class="project-title">Smart IoT Environmental Telemetry & Edge AI Hub</h3>
+                        <p class="project-desc">
+                            Edge sensor node gathering ambient data (temperature, humidity, air quality) transmitted via MQTT protocol to a central edge broker. Implements lightweight machine learning classification for automated environmental anomaly detection.
+                        </p>
+                        <div class="project-tech-stack">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">ESP32 / MCU</span>
+                            <span class="tech-tag">MQTT Protocol</span>
+                            <span class="tech-tag">Scikit-Learn</span>
+                            <span class="tech-tag">Edge Computing</span>
+                        </div>
+                    </div>
+                    <div class="project-footer">
+                        <a href="https://github.com/ChengxuanWu" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                            GitHub Profile
+                        </a>
+                        <span class="project-meta-info">In Progress (Fall 2026)</span>
+                    </div>
+                </article>
+
+                <!-- Project 3: Embedded AI Vision & Object Detection -->
+                <article class="project-card glass-card">
+                    <div class="project-badge status-research">🔬 Research Capstone</div>
+                    <div class="project-content">
+                        <h3 class="project-title">Edge AI Vision & Intelligent Tracking System</h3>
+                        <p class="project-desc">
+                            Embedded computer vision pipeline designed for real-time target recognition and gesture tracking on edge hardware accelerators (Raspberry Pi & Coral TPU) without needing cloud latency.
+                        </p>
+                        <div class="project-tech-stack">
+                            <span class="tech-tag">C / C++</span>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">OpenCV</span>
+                            <span class="tech-tag">TensorFlow Lite</span>
+                            <span class="tech-tag">Embedded Linux</span>
+                        </div>
+                    </div>
+                    <div class="project-footer">
+                        <a href="https://github.com/ChengxuanWu" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                            GitHub Profile
+                        </a>
+                        <span class="project-meta-info">Concept & Architecture</span>
+                    </div>
+                </article>
+            </div>
+        </section>
+
         <!-- Footer -->
         <footer class="footer">
-            <p>Designed for real-time clarity &bull; Personalized Live Engine</p>
+            <div class="footer-content">
+                <p>Designed by <strong>Chengxuan Wu</strong> &bull; AIoT Edge Dashboard & Portfolio</p>
+                <p class="footer-links">
+                    <a href="https://github.com/ChengxuanWu/AIOT_personalweb" target="_blank" rel="noopener noreferrer">GitHub Repository</a> &bull;
+                    <a href="https://chengxuanwu.github.io/AIOT_personalweb/" target="_blank" rel="noopener noreferrer">Live Demo</a>
+                </p>
+            </div>
         </footer>
     </main>
 
