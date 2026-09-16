@@ -2,6 +2,8 @@
 
 A modern, responsive personal web dashboard displaying live timing, world clocks, dynamic day progress, and profile management.
 
+**Live Demo**: https://github.com/ChengxuanWu/AIOT_personalweb/blob/main/README.md
+
 ## ✨ Features
 - **Real-time Live Clock**: Interactive 12H/24H format with seconds ticker and AM/PM badge.
 - **Dynamic Greetings**: Morning, Afternoon, Evening, and Night contextual greetings.
