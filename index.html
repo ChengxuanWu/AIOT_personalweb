@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Dashboard & Live Timing</title>
+    <meta name="description" content="Personalized interactive dashboard displaying current time, date, personalized greeting, and time management tools.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Animated Ambient Background Orbs -->
+    <div class="bg-ambient">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="grid-overlay"></div>
+    </div>
+
+    <!-- Main Container -->
+    <main class="dashboard-container">
+        <!-- Header / Profile Section -->
+        <header class="profile-header glass-card">
+            <div class="avatar-wrapper">
+                <div class="avatar" id="avatarBadge">
+                    <span id="avatarInitials">CW</span>
+                </div>
+                <div class="status-indicator" title="Status: Online & Live"></div>
+            </div>
+            
+            <div class="profile-info">
+                <div class="greeting-tag" id="greetingTag">
+                    <span class="greeting-icon" id="greetingIcon">✨</span>
+                    <span id="greetingText">Good Day</span>
+                </div>
+                
+                <h1 class="user-name" id="nameContainer">
+                    <span id="userNameDisplay" class="editable-name" title="Click to edit your name">Chengxuan Wu</span>
+                    <button id="editNameBtn" class="icon-btn edit-btn" aria-label="Edit Name" title="Edit Name">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                    </button>
+                </h1>
+                
+                <div id="nameEditForm" class="name-edit-form hidden">
+                    <input type="text" id="nameInput" placeholder="Enter your name..." maxlength="35" autocomplete="off" />
+                    <button id="saveNameBtn" class="btn btn-primary">Save</button>
+                    <button id="cancelNameBtn" class="btn btn-secondary">Cancel</button>
+                </div>
+
+                <p class="user-bio" id="userBioDisplay" title="Click to edit status message">Personal Dashboard & Time Engine</p>
+            </div>
+
+            <div class="header-actions">
+                <button id="themeToggleBtn" class="glass-btn" title="Switch Theme">
+                    <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                    <svg class="moon-icon hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Hero Time Display -->
+        <section class="time-hero glass-card">
+            <div class="time-format-switch">
+                <button id="format12Btn" class="format-btn active">12H</button>
+                <button id="format24Btn" class="format-btn">24H</button>
+            </div>
+
+            <div class="clock-display">
+                <div class="main-time" id="mainTime">00:00:00</div>
+                <div class="time-ampm" id="timeAmPm">AM</div>
+            </div>
+
+            <div class="date-display" id="fullDateDisplay">
+                Loading date...
+            </div>
+
+            <div class="tz-badge" id="timezoneBadge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                <span id="timezoneText">UTC+00:00</span>
+            </div>
+
+            <!-- Day Progress Bar -->
+            <div class="day-progress-container">
+                <div class="progress-labels">
+                    <span>Day Progress</span>
+                    <span id="dayProgressPercent">0%</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="dayProgressBar"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dashboard Grid Cards -->
+        <section class="grid-cards">
+            <!-- UTC & World Clocks -->
+            <div class="card glass-card">
+                <div class="card-header">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    <h2>World Clocks</h2>
+                </div>
+                <div class="world-clocks-list">
+                    <div class="clock-item">
+                        <span class="city-name">UTC Standard</span>
+                        <span class="city-time" id="utcTime">--:--:--</span>
+                    </div>
+                    <div class="clock-item">
+                        <span class="city-name">New York (EST/EDT)</span>
+                        <span class="city-time" id="nyTime">--:--:--</span>
+                    </div>
+                    <div class="clock-item">
+                        <span class="city-name">London (GMT/BST)</span>
+                        <span class="city-time" id="londonTime">--:--:--</span>
+                    </div>
+                    <div class="clock-item">
+                        <span class="city-name">Tokyo (JST)</span>
+                        <span class="city-time" id="tokyoTime">--:--:--</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Time Metrics & Details -->
+            <div class="card glass-card">
+                <div class="card-header">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                    <h2>Timing Details</h2>
+                </div>
+                <div class="metrics-grid">
+                    <div class="metric-box">
+                        <span class="metric-label">Day of Year</span>
+                        <span class="metric-value" id="dayOfYearVal">--</span>
+                    </div>
+                    <div class="metric-box">
+                        <span class="metric-label">Week Number</span>
+                        <span class="metric-value" id="weekNumVal">--</span>
+                    </div>
+                    <div class="metric-box">
+                        <span class="metric-label">Leap Year</span>
+                        <span class="metric-value" id="isLeapYearVal">--</span>
+                    </div>
+                    <div class="metric-box">
+                        <span class="metric-label">Unix Timestamp</span>
+                        <span class="metric-value" id="unixTimestampVal">--</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Focus Timer / Stopwatch Widget -->
+            <div class="card glass-card">
+                <div class="card-header">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>
+                    <h2>Quick Timer</h2>
+                </div>
+                <div class="timer-widget">
+                    <div class="timer-display" id="timerDisplay">00:00</div>
+                    <div class="timer-controls">
+                        <button id="startTimerBtn" class="btn btn-sm btn-primary">Start (5m)</button>
+                        <button id="pauseTimerBtn" class="btn btn-sm btn-secondary" disabled>Pause</button>
+                        <button id="resetTimerBtn" class="btn btn-sm btn-outline">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Designed for real-time clarity &bull; Personalized Live Engine</p>
+        </footer>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
